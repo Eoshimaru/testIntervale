@@ -25,16 +25,17 @@ public class ApiController {
 
         if (request == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            this.mediaService.save(MediaDto.builder()
+                    .type(request.getType())
+                    .name(request.getName())
+                    .author(request.getAuthor())
+                    .themes(request.getThemes())
+                    .publishingHouse(request.getPublishingHouse())
+                    .printDate(request.getPrintDate())
+                    .build());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        this.mediaService.save(MediaDto.builder()
-                .type(request.getType())
-                .name(request.getName())
-                .author(request.getAuthor())
-                .themes(request.getThemes())
-                .publishingHouse(request.getPublishingHouse())
-                .printDate(request.getPrintDate())
-                .build());
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("{identifier}")
@@ -43,8 +44,9 @@ public class ApiController {
         MediaDto media = this.mediaService.getMedia(identifier);
         if (media == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(media, HttpStatus.OK);
         }
-        return new ResponseEntity<>(media, HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -58,42 +60,45 @@ public class ApiController {
         List<MediaDto> media = this.mediaService.getAll(author, themes, publishingHouse, startDate, endDate, type);
         if (media.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(new GetAllResponse(media.stream().map(mediaDto -> MediaRequestResponse.builder()
+                            .type(mediaDto.getType())
+                            .name(mediaDto.getName())
+                            .author(mediaDto.getAuthor())
+                            .themes(mediaDto.getThemes())
+                            .publishingHouse(mediaDto.getPublishingHouse())
+                            .printDate(mediaDto.getPrintDate())
+                            .identifier(mediaDto.getIdentifier())
+                            .build())
+                    .collect(Collectors.toList())), HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(new GetAllResponse(media.stream().map(mediaDto -> MediaRequestResponse.builder()
-                        .type(mediaDto.getType())
-                        .name(mediaDto.getName())
-                        .author(mediaDto.getAuthor())
-                        .themes(mediaDto.getThemes())
-                        .publishingHouse(mediaDto.getPublishingHouse())
-                        .printDate(mediaDto.getPrintDate())
-                        .identifier(mediaDto.getIdentifier())
-                        .build())
-                .collect(Collectors.toList())), HttpStatus.OK);
     }
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody MediaRequestResponse request) {
-        if (request != null){
-        mediaService.update(MediaDto.builder()
-                .type(request.getType())
-                .name(request.getName())
-                .author(request.getAuthor())
-                .themes(request.getThemes())
-                .publishingHouse(request.getPublishingHouse())
-                .printDate(request.getPrintDate())
-                .identifier(request.getIdentifier())
-                .build());
-        return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        if (request != null) {
+            mediaService.update(MediaDto.builder()
+                    .type(request.getType())
+                    .name(request.getName())
+                    .author(request.getAuthor())
+                    .themes(request.getThemes())
+                    .publishingHouse(request.getPublishingHouse())
+                    .printDate(request.getPrintDate())
+                    .identifier(request.getIdentifier())
+                    .build());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping(value = "/{identifier}")
+    @DeleteMapping("/{identifier}")
     public ResponseEntity<MediaDto> delete(@PathVariable String identifier) {
-
-        mediaService.delete(identifier);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (identifier != null) {
+            mediaService.delete(identifier);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

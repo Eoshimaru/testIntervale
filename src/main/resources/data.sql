@@ -1,3 +1,5 @@
-insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('BOOK','Властелин колец','Дж. Р.Р. Толкиен','Фэнтези','George Allen & Unwin','1955-10-20','2')
-insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('BOOK','Джейн Эйр','Ш. Бронте','Роман','Смит, Элдер и Ко','1847-10-16','3')
-
+insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('Книга','Властелин колец','Дж. Р.Р. Толкиен','Фэнтези','George Allen & Unwin','1955-10-20','22312-asd-123asd')
+insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('Книга','Джейн Эйр','Ш. Бронте','Роман','Смит, Элдер и Ко','1847-10-16','asdasd-qwer-213')
+insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('Журнал','Наука и жизнь №7','','Наука','АНО Редакция журнала «Наука и жизнь»','2019-11-23','33-sre-123-asd')
+insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('Газета','СБ Беларусь сегодня №456','Васильев В., Овсепьян И.','Новости','Издательский дом «Беларусь сегодня»','2021-03-15','3')
+insert into media(type,name,author,themes,publishing_house,print_date,identifier) values ('Книга','Война и мир','Л.Н. Толстой','Роман-эпопея','Русский вестник','2006-07-16','aaaaa-eee-22-rasr')
