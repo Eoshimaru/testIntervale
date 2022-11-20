@@ -74,7 +74,7 @@ public class ApiController {
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody MediaRequestResponse request) {
-
+        if (request != null){
         mediaService.update(MediaDto.builder()
                 .type(request.getType())
                 .name(request.getName())
@@ -85,6 +85,9 @@ public class ApiController {
                 .identifier(request.getIdentifier())
                 .build());
         return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping(value = "/{identifier}")
